@@ -1,4 +1,6 @@
 package com.sekalisubmit.jetbrains.model
 
-class FavsIDE {
-}
+data class FavsIDE(
+    val ide: IDE,
+    val isFav: Boolean
+)

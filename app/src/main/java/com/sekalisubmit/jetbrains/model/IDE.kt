@@ -1,4 +1,10 @@
 package com.sekalisubmit.jetbrains.model
 
-class IDE {
-}
+data class IDE(
+    val id: Long,
+    val image: Int,
+    val title: String,
+    val subtitle: String,
+    val category: String,
+    val ticker: String
+)
