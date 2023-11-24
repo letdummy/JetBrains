@@ -6,5 +6,6 @@ data class IDE(
     val title: String,
     val subtitle: String,
     val category: String,
+    val description: String,
     val ticker: String
 )

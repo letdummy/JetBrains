@@ -22,12 +22,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.sekalisubmit.jetbrains.ui.navigation.NavigationItem
 import com.sekalisubmit.jetbrains.ui.navigation.Screen
+import com.sekalisubmit.jetbrains.ui.screen.detail.DetailScreen
 import com.sekalisubmit.jetbrains.ui.screen.favorite.FavoriteScreen
 import com.sekalisubmit.jetbrains.ui.screen.home.HomeScreen
 import com.sekalisubmit.jetbrains.ui.screen.profile.ProfileScreen
@@ -43,22 +46,29 @@ fun JetBrainsApp(
 
     Scaffold(
         bottomBar = {
-            BottomBar(
-                navController = navController,
-                modifier = Modifier
-                    .padding(10.dp)
-                    .clip(RoundedCornerShape(20.dp)),
-            )
+            if (currentRoute != Screen.Detail.route) {
+                BottomBar(
+                    navController = navController,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .clip(RoundedCornerShape(20.dp)),
+                )
+            }
         },
         modifier = modifier
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         ) {
             composable(Screen.Home.route) {
-                HomeScreen()
+                HomeScreen(
+                    navController = navController,
+                    navigateToDetail = { ideId ->
+                        navController.navigate(Screen.Detail.createRoute(ideId))
+                    }
+                )
             }
             composable(Screen.Favorite.route) {
                 FavoriteScreen()
@@ -69,10 +79,17 @@ fun JetBrainsApp(
             composable(Screen.Setting.route) {
                 SettingScreen()
             }
+            composable(
+                Screen.Detail.route,
+                arguments = listOf(navArgument("ideId") { type = NavType.LongType }),) {
+                DetailScreen(
+                    ideId = it.arguments?.getLong("ideId") ?: 1L,
+                    navigateBack = { navController.navigateUp() },
+                )
+            }
         }
     }
 }
-
 
 @Composable
 private fun BottomBar(

@@ -25,8 +25,6 @@ import com.sekalisubmit.jetbrains.ui.theme.Shapes
 
 @Composable
 fun ItemLayout(
-    ideId: Int,
-    isFavorite: Boolean,
     image: Int,
     title: String,
     subtitle: String,
@@ -39,10 +37,10 @@ fun ItemLayout(
         Image(
             painter = painterResource(image),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier
                 .size(70.dp)
-                .clip(Shapes.small)
+                .clip(Shapes.medium)
                 .padding(8.dp)
 
         )
@@ -73,8 +71,6 @@ fun ItemLayout(
 @Preview(showBackground = true)
 fun ItemLayoutPreview() {
     ItemLayout(
-        1,
-        false,
         R.drawable.ide_aqua,
         stringResource(R.string.aqua),
         stringResource(R.string.aqua_desc)

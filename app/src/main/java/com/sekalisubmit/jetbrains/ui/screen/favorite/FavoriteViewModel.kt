@@ -1,4 +1,9 @@
 package com.sekalisubmit.jetbrains.ui.screen.favorite
 
-class FavoriteViewModel {
+import androidx.lifecycle.ViewModel
+import com.sekalisubmit.jetbrains.data.IDERepository
+
+class FavoriteViewModel(
+    private val repository: IDERepository
+) : ViewModel() {
 }

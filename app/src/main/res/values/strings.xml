@@ -11,4 +11,10 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_settings">Settings</string>
 
+
+    <!-- Profile -->
+    <string name="profile_hook">Meet the Dev</string>
+    <string name="profile_name">Agus Ardiansyah Nh</string>
+    <string name="profile_email">aguzardiansyahnh@gmail.com</string>
+
 </resources>

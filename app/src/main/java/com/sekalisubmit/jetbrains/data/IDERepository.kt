@@ -18,6 +18,12 @@ class IDERepository {
         }
     }
 
+    fun isFavIDE(ideId: Long): Boolean {
+        return ides.first {
+            it.ide.id == ideId
+        }.isFav
+    }
+
     fun getAllIDE(): Flow<List<FavsIDE>> {
         return flowOf(ides)
     }
@@ -26,6 +32,15 @@ class IDERepository {
         return ides.first {
             it.ide.id == ideId
         }
+    }
+
+    fun searchIDE(query: String): Flow<List<FavsIDE>> {
+        return getAllIDE()
+            .map { favsIDE ->
+                favsIDE.filter { favs ->
+                    favs.ide.title.contains(query, ignoreCase = true)
+                }
+            }
     }
 
     fun updateFavIDE(ideId: Long, newFavValue: Boolean): Flow<Boolean> {

@@ -13,13 +13,12 @@ import com.sekalisubmit.jetbrains.R
 
 @Composable
 fun FavoriteButton(
-    ideId: Int,
     isFavorite: Boolean,
-    onClick: (ideId: Int, isFavorite: Boolean) -> Unit,
+    onClick: () -> Unit,
 ) {
     Row {
         IconButton(
-            onClick = { onClick(ideId, !isFavorite) }
+            onClick = { onClick() },
         ) {
             val iconRes = if (isFavorite) {
                 R.drawable.ic_fav_fill
@@ -43,7 +42,6 @@ fun FavoriteButton(
 @Composable
 fun PreviewFavoriteButton() {
     FavoriteButton(
-        ideId = 1,
         isFavorite = true
-    ) { _, _ -> }
+    ) {}
 }

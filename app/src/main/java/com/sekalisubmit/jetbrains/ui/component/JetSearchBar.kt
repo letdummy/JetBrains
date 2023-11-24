@@ -39,7 +39,7 @@ import com.sekalisubmit.jetbrains.ui.theme.jetFont
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(
+fun JetSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -124,7 +124,7 @@ fun SearchBar(
 @Preview
 @Composable
 fun PreviewSearchBar() {
-    SearchBar(
+    JetSearchBar(
         query = "",
         onQueryChange = {},
         navController = NavController(LocalContext.current)
