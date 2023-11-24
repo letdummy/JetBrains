@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.sekalisubmit.jetbrains.R
 import com.sekalisubmit.jetbrains.ui.theme.jetFont
 
@@ -91,7 +92,15 @@ fun JetSearchBar(
             Spacer(modifier = Modifier.width(4.dp))
 
             IconButton(
-                onClick = {  },
+                onClick = {
+                    navController.navigate("favorite") {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                },
                 modifier = Modifier
                     .align(Alignment.Bottom)
                     .size(40.dp)
@@ -114,7 +123,15 @@ fun JetSearchBar(
                     .size(40.dp)
                     .clip(CircleShape)
                     .align(Alignment.Bottom)
-                    .clickable { }
+                    .clickable {
+                        navController.navigate("profile") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    }
                     .testTag("Icon_Avatar")
             )
         }

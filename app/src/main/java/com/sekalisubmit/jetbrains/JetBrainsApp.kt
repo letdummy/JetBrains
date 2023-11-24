@@ -71,7 +71,11 @@ fun JetBrainsApp(
                 )
             }
             composable(Screen.Favorite.route) {
-                FavoriteScreen()
+                FavoriteScreen(
+                    navigateToDetail = { ideId ->
+                        navController.navigate(Screen.Detail.createRoute(ideId))
+                    }
+                )
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
