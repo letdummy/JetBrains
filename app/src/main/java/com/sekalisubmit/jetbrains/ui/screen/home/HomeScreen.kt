@@ -1,5 +1,6 @@
 package com.sekalisubmit.jetbrains.ui.screen.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -40,6 +44,7 @@ import com.sekalisubmit.jetbrains.ui.common.UIState
 import com.sekalisubmit.jetbrains.ui.component.ItemLayout
 import com.sekalisubmit.jetbrains.ui.component.JetSearchBar
 import com.sekalisubmit.jetbrains.ui.component.Slider
+import com.sekalisubmit.jetbrains.ui.theme.jetFont
 
 @Composable
 fun HomeScreen(
@@ -72,7 +77,17 @@ fun HomeScreen(
                 )
             }
 
-            is UIState.Error -> {}
+            is UIState.Error -> {
+                Log.e("HomeScreen", uiState.errorMessage)
+                Text(
+                    text = uiState.errorMessage,
+                    fontFamily = jetFont,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 
@@ -127,7 +142,7 @@ fun HomeContent(
             item {
                 Card(
                     modifier = Modifier.padding(4.dp),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
                     Slider()
                 }

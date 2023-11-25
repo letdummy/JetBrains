@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -49,7 +50,9 @@ fun Slider(
     }
 
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .testTag("slider"),
     ) {
         HorizontalPager(count = itemsCount, state = pagerState) { page ->
             itemContent(page)
@@ -114,7 +117,7 @@ fun DotsIndicator(
 }
 
 // default data assigned to slider to make it ready to use
-// note: image size recommendation is 1700x850
+// note: make sure the resource have good view ratio
 val images = listOf(
     "https://raw.githubusercontent.com/letdummy/dump/master/slider1.png",
     "https://raw.githubusercontent.com/letdummy/dump/master/slider2.png",

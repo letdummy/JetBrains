@@ -6,7 +6,6 @@ import com.sekalisubmit.jetbrains.data.IDERepository
 import com.sekalisubmit.jetbrains.ui.screen.detail.DetailViewModel
 import com.sekalisubmit.jetbrains.ui.screen.favorite.FavoriteViewModel
 import com.sekalisubmit.jetbrains.ui.screen.home.HomeViewModel
-import com.sekalisubmit.jetbrains.ui.screen.setting.SettingViewModel
 
 class ViewModelFactory(private val repository: IDERepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -19,8 +18,6 @@ class ViewModelFactory(private val repository: IDERepository) :
             return DetailViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
             return FavoriteViewModel(repository) as T
-        } else if (modelClass.isAssignableFrom(SettingViewModel::class.java)) {
-            return SettingViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

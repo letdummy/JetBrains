@@ -3,6 +3,7 @@ package com.sekalisubmit.jetbrains.ui.screen.profile
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -39,6 +41,7 @@ fun ProfileScreen(
     val intentLinkedIn = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/agusardi/"))
     val intentGithub = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/letdummy"))
     val context = LocalContext.current
+    val email = stringResource(R.string.profile_email)
 
     Box(
         modifier = modifier
@@ -51,7 +54,7 @@ fun ProfileScreen(
                 text = stringResource(R.string.profile_hook),
                 style = TextStyle(
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     fontFamily = jetFont
                 ),
@@ -84,11 +87,17 @@ fun ProfileScreen(
                 style = TextStyle(
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
-                    fontFamily = jetFont
+                    fontFamily = jetFont,
+                    color = Color(0xFF0C8CE9),
                 ),
                 modifier = Modifier
                     .width(250.dp)
                     .padding(top = 4.dp)
+                    .clickable(onClick = {
+                        val intent = Intent(Intent.ACTION_SENDTO)
+                        intent.data = Uri.parse("mailto:$email")
+                        startActivity(context, intent, null)
+                    })
             )
             Row (
                 modifier = Modifier

@@ -1,13 +1,16 @@
 package com.sekalisubmit.jetbrains.ui.screen.favorite
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,7 +50,17 @@ fun FavoriteScreen(
                     navigateToDetail = navigateToDetail
                 )
             }
-            is UIState.Error -> {}
+            is UIState.Error -> {
+                Log.e("FavoriteScreen", uiState.errorMessage)
+                Text(
+                    text = uiState.errorMessage,
+                    fontFamily = jetFont,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 
@@ -97,15 +110,27 @@ fun FavoriteContent(
             }
         } else {
             item {
-                Box(
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 40.dp)
+                        .fillMaxWidth()
+                        .padding(top = 56.dp)
                 ){
                     Image(
                         painter = painterResource(id = R.drawable.ic_nofav),
                         contentDescription = "No Data",
                         modifier = Modifier.fillMaxSize()
+                    )
+
+                    Text(
+                        text = "No Favorite",
+                        color = MaterialTheme.colorScheme.outline,
+                        fontFamily = jetFont,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth()
                     )
                 }
             }

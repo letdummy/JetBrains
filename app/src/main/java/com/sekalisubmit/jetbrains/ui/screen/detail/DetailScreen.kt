@@ -2,6 +2,7 @@ package com.sekalisubmit.jetbrains.ui.screen.detail
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -75,7 +76,17 @@ fun DetailScreen(
                 )
             }
 
-            is UIState.Error -> {}
+            is UIState.Error -> {
+                Log.e("DetailScreen", uiState.errorMessage)
+                Text(
+                    text = uiState.errorMessage,
+                    fontFamily = jetFont,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
@@ -88,122 +99,118 @@ fun DetailContent(
     subtitle: String,
     description: String,
     ticker: String,
-    navigateBack: () -> Unit,
-    modifier: Modifier = Modifier
+    navigateBack: () -> Unit
 ) {
     val context = LocalContext.current
     var isFav by remember { mutableStateOf(IDERepository.getInstance().isFavIDE(ideID)) }
     val intentFeature = Intent(Intent.ACTION_VIEW, Uri.parse("https://ums.id/$ticker"))
 
 
-    Column(modifier = modifier) {
-        Column(
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .testTag("Detail_Screen")
+            .fillMaxHeight()
+    ) {
+
+        Box(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .weight(1f)
-                .testTag("Detail_Screen")
-                .fillMaxHeight()
+                .height(320.dp)
+                .fillMaxWidth()
         ) {
-
-            Box(
+            Column(
                 modifier = Modifier
-                    .height(320.dp)
+                    .padding(start = 36.dp, top = 90.dp, end = 36.dp)
                     .fillMaxWidth()
-            ) {
-                Column(
+            ){
+                Image(
+                    painter = painterResource(image),
+                    contentDescription = "Image Item",
+                    contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .padding(start = 36.dp, top = 90.dp, end = 36.dp)
-                        .fillMaxWidth()
+                        .height(75.dp)
+                )
+
+                Text(
+                    text = title,
+                    modifier = Modifier
+                        .padding(top = 16.dp),
+                    maxLines = 1,
+                    fontFamily = jetFont,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    Image(
-                        painter = painterResource(image),
-                        contentDescription = "Image Item",
-                        contentScale = ContentScale.Fit,
-                        modifier = modifier
-                            .height(75.dp)
-                    )
-
                     Text(
-                        text = title,
+                        text = subtitle,
                         modifier = Modifier
-                            .padding(top = 16.dp),
-                        maxLines = 1,
+                            .width(200.dp)
+                        ,
+                        maxLines = 2,
                         fontFamily = jetFont,
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Normal
                     )
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ){
-                        Text(
-                            text = subtitle,
-                            modifier = Modifier
-                                .width(200.dp)
-                            ,
-                            maxLines = 2,
-                            fontFamily = jetFont,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Normal
+                    Box {
+                        FavoriteButton(
+                            isFavorite = isFav,
+                            onClick = {
+                                IDERepository.getInstance().updateFavIDE(ideID, !isFav)
+                                isFav = !isFav
+                            }
                         )
-
-                        Box {
-                            FavoriteButton(
-                                isFavorite = isFav,
-                                onClick = {
-                                    IDERepository.getInstance().updateFavIDE(ideID, !isFav)
-                                    isFav = !isFav
-                                }
-                            )
-                        }
                     }
-                }
-
-                IconButton(
-                    modifier = Modifier.padding(16.dp),
-                    onClick = {
-                        navigateBack()
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_back),
-                        contentDescription = "Icon Back",
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.testTag("Icon_Back")
-                    )
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .height(600.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                    .background(MaterialTheme.colorScheme.outline)
-            ){
-                Column {
-                    Text(
-                        text = description,
-                        modifier = Modifier
-                            .padding(start = 36.dp, top = 36.dp, end = 36.dp),
-                        fontFamily = jetFont,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Justify
-                    )
-
-                    FeatureButton(
-                        text = "See All Feature",
-                        onClick = {
-                            startActivity(context, intentFeature, null)
-                        },
-                        modifier = Modifier
-                            .padding(top = 46.dp, start = 36.dp, end = 36.dp)
-                            .fillMaxWidth()
-                    )
+            IconButton(
+                modifier = Modifier.padding(16.dp),
+                onClick = {
+                    navigateBack()
                 }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_back),
+                    contentDescription = "Icon Back",
+                    tint = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.testTag("Icon_Back")
+                )
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                .background(MaterialTheme.colorScheme.outline)
+        ){
+            Column {
+                Text(
+                    text = description,
+                    modifier = Modifier
+                        .padding(start = 36.dp, top = 36.dp, end = 36.dp),
+                    fontFamily = jetFont,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Justify
+                )
+
+                FeatureButton(
+                    text = "See All Feature",
+                    onClick = {
+                        startActivity(context, intentFeature, null)
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 36.dp, vertical = 100.dp)
+                        .fillMaxWidth()
+                )
             }
         }
     }

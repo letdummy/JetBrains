@@ -1,3 +1,5 @@
+@file:Suppress("PrivatePropertyName")
+
 package com.sekalisubmit.jetbrains.ui.theme
 
 import android.app.Activity
@@ -16,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+@Suppress("PrivatePropertyName")
 private val DarkColorScheme = darkColorScheme(
     primary = lightPrimary,
     secondary = lightSecondary,
@@ -31,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun JetBrainsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
