@@ -116,7 +116,7 @@ fun JetSearchBar(
 
             Image(
                 painter = painterResource(id = R.drawable.avatar),
-                contentDescription = "Image Profile",
+                contentDescription = "about_page",
                 modifier = modifier
                     .size(40.dp)
                     .clip(CircleShape)
