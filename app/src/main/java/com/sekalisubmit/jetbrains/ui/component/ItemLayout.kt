@@ -39,14 +39,14 @@ fun ItemLayout(
             painter = painterResource(image),
             contentDescription = null,
             contentScale = ContentScale.Fit,
-            modifier = modifier
+            modifier = Modifier
                 .size(70.dp)
                 .clip(Shapes.medium)
                 .padding(8.dp)
 
         )
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
                 .weight(1.0f),

@@ -81,7 +81,7 @@ fun JetSearchBar(
                     Color.LightGray,
                     inputFieldColors = SearchBarDefaults.inputFieldColors(Color.Black)
                 ),
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f)
                     .height(50.dp)
                     .testTag("Search_Bar")
@@ -99,7 +99,7 @@ fun JetSearchBar(
                         launchSingleTop = true
                     }
                 },
-                modifier = modifier
+                modifier = Modifier
                     .align(Alignment.Bottom)
                     .size(40.dp)
                     .testTag("Icon_Favorite")
@@ -117,7 +117,7 @@ fun JetSearchBar(
             Image(
                 painter = painterResource(id = R.drawable.avatar),
                 contentDescription = "about_page",
-                modifier = modifier
+                modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
                     .align(Alignment.Bottom)
