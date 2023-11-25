@@ -43,7 +43,7 @@ fun SettingScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .testTag("Setting_Screen"),
+            .testTag("settingScreen"),
         contentAlignment = Alignment.TopCenter,
     ) {
         Column {
@@ -53,25 +53,26 @@ fun SettingScreen(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
             )
 
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
 
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
                         .background(
                             Color(0xFF121314),
                             RoundedCornerShape(8.dp)
-                        ),
+                        )
+                        .testTag("themeSetting"),
                 ) {
                     Column{
                         Text(
@@ -81,7 +82,7 @@ fun SettingScreen(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Start,
-                            modifier = Modifier
+                            modifier = modifier
                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         )
                         Text(
@@ -91,14 +92,14 @@ fun SettingScreen(
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Start,
-                            modifier = Modifier
+                            modifier = modifier
                                 .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                                 .width(250.dp)
                         )
                     }
 
                     Box(
-                        modifier = Modifier
+                        modifier = modifier
                             .align(Alignment.CenterVertically)
                             .padding(24.dp)
                             .background(
@@ -113,18 +114,18 @@ fun SettingScreen(
                                 painter = painterResource(R.drawable.ic_theme),
                                 contentDescription = "Change theme",
                                 tint = Color(0xFF121314),
-                                modifier = Modifier
+                                modifier = modifier
                                     .size(30.dp)
-                                    .testTag("theme")
                             )
                         }
                     }
                 }
 
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
-                        .padding(vertical = 100.dp),
+                        .padding(vertical = 100.dp)
+                        .testTag("contributeSetting"),
                 ) {
                     Column{
                         Text(
@@ -133,7 +134,7 @@ fun SettingScreen(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier
+                            modifier = modifier
                                 .fillMaxWidth()
                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         )
@@ -144,7 +145,7 @@ fun SettingScreen(
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center,
                             color = Color(0xFF0C8CE9),
-                            modifier = Modifier
+                            modifier = modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                                 .clickable(

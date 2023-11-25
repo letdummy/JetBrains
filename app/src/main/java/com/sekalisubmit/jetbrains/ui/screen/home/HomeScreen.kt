@@ -1,8 +1,10 @@
 package com.sekalisubmit.jetbrains.ui.screen.home
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -29,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.sekalisubmit.jetbrains.R
 import com.sekalisubmit.jetbrains.di.Injection
 import com.sekalisubmit.jetbrains.model.FakeIDEData
 import com.sekalisubmit.jetbrains.model.FavsIDE
@@ -85,7 +90,7 @@ fun HomeScreen(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = modifier.fillMaxWidth()
                 )
             }
         }
@@ -113,7 +118,7 @@ fun HomeContent(
         }
 
     Scaffold(
-        modifier = Modifier
+        modifier = modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
@@ -126,9 +131,8 @@ fun HomeContent(
                         navController = navController
                     )
                 },
-                modifier = Modifier
+                modifier = modifier
                     .padding(bottom = 8.dp)
-                    .testTag("Home_TopBar")
             )
         }
     ){ innerPadding ->
@@ -137,11 +141,11 @@ fun HomeContent(
             modifier = modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxSize()
-                .testTag("Home_Screen")
+                .testTag("homeScreen")
         ) {
             item {
                 Card(
-                    modifier = Modifier.padding(4.dp),
+                    modifier = modifier.padding(4.dp),
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Slider()
@@ -149,7 +153,7 @@ fun HomeContent(
             }
             item {
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState())
                         .padding(bottom = 16.dp)
@@ -160,13 +164,15 @@ fun HomeContent(
                         onClick = {
                             selectedCategories = emptySet()
                         },
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = modifier
+                            .padding(end = 8.dp)
+                            .testTag("allCategory"),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = if (selectedCategories.isEmpty()) Color.LightGray else Color(0xFF121314)
                         ),
                     ) {
                         Text(
-                            text = "All",
+                            text = "all",
                             color = if (selectedCategories.isEmpty()) Color.Black else Color.White
                             )
                     }
@@ -186,7 +192,9 @@ fun HomeContent(
                                     selectedCategories + category
                                 }
                             },
-                            modifier = Modifier.padding(end = 8.dp),
+                            modifier = modifier
+                                .padding(end = 8.dp)
+                                .testTag("${category}Category"),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (isFilled) Color.LightGray else Color(0xFF121314)
                             )
@@ -201,16 +209,51 @@ fun HomeContent(
             }
 
             item{
-                for (item in filteredItems) {
-                    ItemLayout(
-                        image = item.ide.image,
-                        title = item.ide.title,
-                        subtitle = item.ide.subtitle,
+                if (filteredItems.isEmpty()) {
+                    Column(
                         modifier = modifier
-                            .clickable {
-                                navigateToDetail(item.ide.id)
-                            }
-                    )
+                            .fillMaxWidth()
+                            .padding(top = 56.dp)
+                            .testTag("searchFail")
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_nofav),
+                            contentDescription = "No Data",
+                            modifier = modifier.fillMaxSize()
+                        )
+
+                        Text(
+                            text = "There is no $searchQuery IDE",
+                            color = MaterialTheme.colorScheme.outline,
+                            fontFamily = jetFont,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            modifier = modifier
+                                .padding(top = 8.dp)
+                                .fillMaxWidth()
+                        )
+                    }
+                } else {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .testTag("searchSuccess")
+                    ){
+
+                    }
+                    for (item in filteredItems) {
+                        ItemLayout(
+                            image = item.ide.image,
+                            title = item.ide.title,
+                            subtitle = item.ide.subtitle,
+                            modifier = modifier
+                                .clickable {
+                                    navigateToDetail(item.ide.id)
+                                }
+                                .testTag("IDE_${item.ide.id}")
+                        )
+                    }
                 }
             }
         }

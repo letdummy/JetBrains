@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -49,7 +50,7 @@ fun JetBrainsApp(
             if (currentRoute != Screen.Detail.route) {
                 BottomBar(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(10.dp)
                         .clip(RoundedCornerShape(20.dp)),
                 )
@@ -60,7 +61,7 @@ fun JetBrainsApp(
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
@@ -130,10 +131,12 @@ private fun BottomBar(
         )
         navigationItems.map { item ->
             NavigationBarItem(
+                modifier = Modifier,
                 icon = {
                     Icon(
                         imageVector = item.icon,
-                        contentDescription = item.title
+                        contentDescription = item.title,
+                        modifier = Modifier.testTag(item.screen.route)
                     )
                 },
                 label = { Text(item.title) },

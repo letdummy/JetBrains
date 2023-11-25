@@ -50,6 +50,7 @@ import com.sekalisubmit.jetbrains.ui.theme.jetFont
 
 @Composable
 fun DetailScreen(
+    modifier: Modifier = Modifier,
     ideId: Long,
     viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(
@@ -84,7 +85,7 @@ fun DetailScreen(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = modifier.fillMaxWidth()
                 )
             }
         }
@@ -93,6 +94,7 @@ fun DetailScreen(
 
 @Composable
 fun DetailContent(
+    modifier: Modifier = Modifier,
     ideID: Long,
     image: Int,
     title: String,
@@ -107,19 +109,20 @@ fun DetailContent(
 
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .verticalScroll(rememberScrollState())
-            .testTag("Detail_Screen")
+            .testTag("detailScreen")
             .fillMaxHeight()
     ) {
 
+        // above part (hero section)
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .height(320.dp)
                 .fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .padding(start = 36.dp, top = 90.dp, end = 36.dp)
                     .fillMaxWidth()
             ){
@@ -127,13 +130,13 @@ fun DetailContent(
                     painter = painterResource(image),
                     contentDescription = "Image Item",
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier
+                    modifier = modifier
                         .height(75.dp)
                 )
 
                 Text(
                     text = title,
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(top = 16.dp),
                     maxLines = 1,
                     fontFamily = jetFont,
@@ -142,13 +145,13 @@ fun DetailContent(
                 )
 
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
                     Text(
                         text = subtitle,
-                        modifier = Modifier
+                        modifier = modifier
                             .width(200.dp)
                         ,
                         maxLines = 2,
@@ -159,6 +162,8 @@ fun DetailContent(
 
                     Box {
                         FavoriteButton(
+                            modifier = modifier
+                                .testTag("favButton"),
                             isFavorite = isFav,
                             onClick = {
                                 IDERepository.getInstance().updateFavIDE(ideID, !isFav)
@@ -170,7 +175,7 @@ fun DetailContent(
             }
 
             IconButton(
-                modifier = Modifier.padding(16.dp),
+                modifier = modifier.padding(16.dp),
                 onClick = {
                     navigateBack()
                 }
@@ -179,13 +184,14 @@ fun DetailContent(
                     painter = painterResource(R.drawable.ic_back),
                     contentDescription = "Icon Back",
                     tint = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.testTag("Icon_Back")
+                    modifier = modifier.testTag("backButton")
                 )
             }
         }
 
+        // below part (description section)
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
@@ -194,12 +200,13 @@ fun DetailContent(
             Column {
                 Text(
                     text = description,
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(start = 36.dp, top = 36.dp, end = 36.dp),
                     fontFamily = jetFont,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Justify
+                    textAlign = TextAlign.Justify,
+                    color = MaterialTheme.colorScheme.surface
                 )
 
                 FeatureButton(
@@ -207,7 +214,7 @@ fun DetailContent(
                     onClick = {
                         startActivity(context, intentFeature, null)
                     },
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(horizontal = 36.dp, vertical = 100.dp)
                         .fillMaxWidth()
                 )

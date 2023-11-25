@@ -1,5 +1,8 @@
 package com.sekalisubmit.jetbrains.ui.component
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
@@ -16,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,13 +44,15 @@ fun Slider(
     autoSlideDuration: Long = 3000L,
     pagerState: PagerState = remember { PagerState() },
     itemsCount: Int = images.size,
-    itemContent: @Composable (index: Int) -> Unit = contents,
 ) {
     val isDragged by pagerState.interactionSource.collectIsDraggedAsState()
+    val context = LocalContext.current
+    val internetState = remember { mutableStateOf(isInternetAvailable(context)) }
 
     LaunchedEffect(pagerState.currentPage) {
         delay(autoSlideDuration)
         pagerState.animateScrollToPage((pagerState.currentPage + 1) % itemsCount)
+        isInternetAvailable(context)
     }
 
     Box(
@@ -55,18 +61,30 @@ fun Slider(
             .testTag("slider"),
     ) {
         HorizontalPager(count = itemsCount, state = pagerState) { page ->
-            itemContent(page)
+            val imageUrl = if (internetState.value) images[page] else defaultImg[page]
+
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.height(200.dp),
+                onError = {
+                    defaultImg[page]
+                }
+            )
         }
 
         Surface(
-            modifier = Modifier
+            modifier = modifier
                 .padding(bottom = 8.dp)
                 .align(Alignment.BottomCenter),
             shape = CircleShape,
             color = Color.Black.copy(alpha = 0.5f)
         ) {
             DotsIndicator(
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+                modifier = modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                 totalDots = itemsCount,
                 selectedIndex = if (isDragged) pagerState.currentPage else pagerState.targetPage,
                 dotSize = 8.dp
@@ -110,7 +128,7 @@ fun DotsIndicator(
             )
 
             if (index != totalDots - 1) {
-                Spacer(modifier = Modifier.padding(horizontal = 2.dp))
+                Spacer(modifier = modifier.padding(horizontal = 2.dp))
             }
         }
     }
@@ -124,14 +142,22 @@ val images = listOf(
     "https://raw.githubusercontent.com/letdummy/dump/master/slider3.png",
 )
 
-val contents: @Composable (index: Int) -> Unit  = { index ->
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(images[index])
-            .build(),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .height(200.dp)
-    )
+val defaultImg = listOf(
+    "android.resource://com.sekalisubmit.jetbrains/drawable/eslider1",
+    "android.resource://com.sekalisubmit.jetbrains/drawable/eslider2",
+    "android.resource://com.sekalisubmit.jetbrains/drawable/eslider3",
+)
+
+private fun isInternetAvailable(context: Context): Boolean {
+    val result: Boolean
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkCapabilities = connectivityManager.activeNetwork ?: return false
+    val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+    result = when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        else -> false
+    }
+    return result
 }

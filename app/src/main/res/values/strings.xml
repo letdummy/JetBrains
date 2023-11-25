@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">JetBrains</string>
 
+    <!--  well, at first I wanna add localization feature, will do it in the next update  -->
+
     <string name="search">Find your preferred IDE</string>
 
     <!-- Menu -->

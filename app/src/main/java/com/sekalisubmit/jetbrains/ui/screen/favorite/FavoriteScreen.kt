@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -58,7 +59,7 @@ fun FavoriteScreen(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = modifier.fillMaxWidth()
                 )
             }
         }
@@ -77,10 +78,11 @@ fun FavoriteContent(
         contentPadding = PaddingValues(16.dp),
         modifier = modifier
             .fillMaxSize()
+            .testTag("favoriteScreen")
     ) {
         item {
             Box(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxSize()
                     .padding(bottom = 20.dp)
             ){
@@ -90,35 +92,41 @@ fun FavoriteContent(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = modifier.fillMaxWidth()
                 )
             }
         }
         if (favsIDE.isNotEmpty()) {
             item {
-                for (fav in favsIDE) {
-                    ItemLayout(
-                        image = fav.ide.image,
-                        title = fav.ide.title,
-                        subtitle = fav.ide.subtitle,
-                        modifier = Modifier
-                            .clickable{
-                                navigateToDetail(fav.ide.id)
-                            }
-                    )
+                Column(
+                    modifier = modifier.testTag("favAvailable")
+                ){
+                    for (fav in favsIDE) {
+                        ItemLayout(
+                            image = fav.ide.image,
+                            title = fav.ide.title,
+                            subtitle = fav.ide.subtitle,
+                            modifier = modifier
+                                .clickable{
+                                    navigateToDetail(fav.ide.id)
+                                }
+                                .testTag("IDE_${fav.ide.id}")
+                        )
+                    }
                 }
             }
         } else {
             item {
                 Column(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .padding(top = 56.dp)
+                        .testTag("favUnavailable")
                 ){
                     Image(
                         painter = painterResource(id = R.drawable.ic_nofav),
                         contentDescription = "No Data",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = modifier.fillMaxSize()
                     )
 
                     Text(
@@ -128,7 +136,7 @@ fun FavoriteContent(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier
+                        modifier = modifier
                             .padding(top = 8.dp)
                             .fillMaxWidth()
                     )

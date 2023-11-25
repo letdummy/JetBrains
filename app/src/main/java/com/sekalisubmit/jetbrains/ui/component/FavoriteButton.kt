@@ -12,6 +12,7 @@ import com.sekalisubmit.jetbrains.R
 
 @Composable
 fun FavoriteButton(
+    modifier: Modifier = Modifier,
     isFavorite: Boolean,
     onClick: () -> Unit,
 ) {
@@ -29,7 +30,7 @@ fun FavoriteButton(
                 painterResource(iconRes),
                 contentDescription = if (isFavorite) "Add to favorite" else "Remove from favorite",
                 tint = Color(0xFFFFAABB),
-                modifier = Modifier
+                modifier = modifier
                     .testTag(if (isFavorite) "Favorited" else "Not Favorited")
             )
         }

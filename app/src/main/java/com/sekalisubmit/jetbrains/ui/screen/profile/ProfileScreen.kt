@@ -46,7 +46,7 @@ fun ProfileScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .testTag("Profile_Screen"),
+            .testTag("profileScreen"),
         contentAlignment = Alignment.Center,
     ) {
         Column {
@@ -58,14 +58,14 @@ fun ProfileScreen(
                     textAlign = TextAlign.Center,
                     fontFamily = jetFont
                 ),
-                modifier = Modifier
+                modifier = modifier
                     .width(250.dp)
                     .padding(vertical = 16.dp)
             )
             Image(
                 painter = painterResource(R.drawable.avatar),
                 contentDescription = "about_page",
-                modifier = Modifier
+                modifier = modifier
                     .clip(CircleShape)
                     .size(150.dp)
                     .align(Alignment.CenterHorizontally)
@@ -78,7 +78,7 @@ fun ProfileScreen(
                     textAlign = TextAlign.Center,
                     fontFamily = jetFont
                 ),
-                modifier = Modifier
+                modifier = modifier
                     .width(250.dp)
                     .padding(top = 16.dp)
             )
@@ -90,7 +90,7 @@ fun ProfileScreen(
                     fontFamily = jetFont,
                     color = Color(0xFF0C8CE9),
                 ),
-                modifier = Modifier
+                modifier = modifier
                     .width(250.dp)
                     .padding(top = 4.dp)
                     .clickable(onClick = {
@@ -98,9 +98,10 @@ fun ProfileScreen(
                         intent.data = Uri.parse("mailto:$email")
                         startActivity(context, intent, null)
                     })
+                    .testTag("email")
             )
             Row (
-                modifier = Modifier
+                modifier = modifier
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
@@ -111,7 +112,7 @@ fun ProfileScreen(
                         painter = painterResource(R.drawable.ic_linkedin),
                         contentDescription = "LinkedIn",
                         tint = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier
+                        modifier = modifier
                             .size(30.dp)
                             .testTag("linkedin")
                     )
@@ -123,7 +124,7 @@ fun ProfileScreen(
                         painter = painterResource(R.drawable.ic_github),
                         contentDescription = "GitHub",
                         tint = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier
+                        modifier = modifier
                             .size(30.dp)
                             .testTag("github")
                     )

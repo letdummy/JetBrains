@@ -81,13 +81,13 @@ fun JetSearchBar(
                     Color.LightGray,
                     inputFieldColors = SearchBarDefaults.inputFieldColors(Color.Black)
                 ),
-                modifier = Modifier
+                modifier = modifier
                     .weight(1f)
                     .height(50.dp)
                     .testTag("Search_Bar")
             ) {}
 
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = modifier.width(4.dp))
 
             IconButton(
                 onClick = {
@@ -99,7 +99,7 @@ fun JetSearchBar(
                         launchSingleTop = true
                     }
                 },
-                modifier = Modifier
+                modifier = modifier
                     .align(Alignment.Bottom)
                     .size(40.dp)
                     .testTag("Icon_Favorite")
@@ -112,12 +112,12 @@ fun JetSearchBar(
                 )
             }
 
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = modifier.width(4.dp))
 
             Image(
                 painter = painterResource(id = R.drawable.avatar),
                 contentDescription = "Image Profile",
-                modifier = Modifier
+                modifier = modifier
                     .size(40.dp)
                     .clip(CircleShape)
                     .align(Alignment.Bottom)

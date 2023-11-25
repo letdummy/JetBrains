@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sekalisubmit.jetbrains.ui.theme.Shapes
+import com.sekalisubmit.jetbrains.ui.theme.jetFont
 
 
 @Composable
@@ -38,14 +39,14 @@ fun ItemLayout(
             painter = painterResource(image),
             contentDescription = null,
             contentScale = ContentScale.Fit,
-            modifier = Modifier
+            modifier = modifier
                 .size(70.dp)
                 .clip(Shapes.medium)
                 .padding(8.dp)
 
         )
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(8.dp)
                 .weight(1.0f),
@@ -55,13 +56,16 @@ fun ItemLayout(
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    fontFamily = jetFont
                 )
             )
             Text(
                 text = subtitle,
                 color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleSmall.copy(
+                    fontFamily = jetFont
+                ),
             )
         }
     }
