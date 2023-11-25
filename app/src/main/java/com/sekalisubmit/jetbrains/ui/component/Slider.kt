@@ -35,6 +35,7 @@ import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
+import com.sekalisubmit.jetbrains.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagerApi::class)
@@ -143,9 +144,9 @@ val images = listOf(
 )
 
 val defaultImg = listOf(
-    "android.resource://com.sekalisubmit.jetbrains/drawable/eslider1",
-    "android.resource://com.sekalisubmit.jetbrains/drawable/eslider2",
-    "android.resource://com.sekalisubmit.jetbrains/drawable/eslider3",
+    R.drawable.eslider1,
+    R.drawable.eslider2,
+    R.drawable.eslider3,
 )
 
 private fun isInternetAvailable(context: Context): Boolean {
