@@ -10,9 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sekalisubmit.jetbrains.ui.theme.JetBrainsTheme
 import com.sekalisubmit.jetbrains.ui.theme.jetFont
 
 @Composable
@@ -38,17 +36,6 @@ fun FeatureButton(
             fontFamily = jetFont,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.CenterVertically)
-        )
-    }
-}
-
-@Composable
-@Preview
-fun OrderButtonPreview() {
-    JetBrainsTheme {
-        FeatureButton(
-            text = "Check all features",
-            onClick = {}
         )
     }
 }

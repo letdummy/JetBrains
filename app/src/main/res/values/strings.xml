@@ -2,8 +2,6 @@
     <string name="app_name">JetBrains</string>
 
     <string name="search">Find your preferred IDE</string>
-    <string name="aqua">Aqua</string>
-    <string name="aqua_desc">A powerful IDE for test automation.</string>
 
     <!-- Menu -->
     <string name="menu_home">Home</string>

@@ -22,10 +22,4 @@ class DetailViewModel(
             _uiState.value = UIState.Success(repository.getIDEById(ideId))
         }
     }
-
-    fun addFavIDE(ideId: Long) {
-        viewModelScope.launch {
-            repository.updateFavIDE(ideId, true)
-        }
-    }
 }

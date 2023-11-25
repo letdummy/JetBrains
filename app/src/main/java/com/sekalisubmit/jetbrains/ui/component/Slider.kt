@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -95,7 +92,7 @@ fun DotsIndicator(
     totalDots: Int,
     selectedIndex: Int,
     selectedColor: Color = Color(0xFF1F1F1F),
-    unSelectedColor: Color = Color(0xFF989899) /* Color.Gray */,
+    unSelectedColor: Color = Color(0xFF989899),
     dotSize: Dp
 ) {
     LazyRow(
@@ -116,8 +113,8 @@ fun DotsIndicator(
     }
 }
 
-
 // default data assigned to slider to make it ready to use
+// note: image size recommendation is 1700x850
 val images = listOf(
     "https://raw.githubusercontent.com/letdummy/dump/master/slider1.png",
     "https://raw.githubusercontent.com/letdummy/dump/master/slider2.png",
@@ -134,17 +131,4 @@ val contents: @Composable (index: Int) -> Unit  = { index ->
         modifier = Modifier
             .height(200.dp)
     )
-}
-
-
-@OptIn(ExperimentalPagerApi::class)
-@Preview
-@Composable
-fun PreviewSlider() {
-    Card(
-        modifier = Modifier.padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
-    ) {
-        Slider()
-    }
 }
