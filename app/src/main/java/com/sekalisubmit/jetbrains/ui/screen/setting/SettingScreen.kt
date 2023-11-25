@@ -36,7 +36,7 @@ import com.sekalisubmit.jetbrains.ui.theme.jetFont
 fun SettingScreen(
     modifier: Modifier = Modifier
 ) {
-    val intentGithub = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/letdummy"))
+    val intentGithub = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/letdummy/JetBrains"))
     val intentSetting = Intent(Settings.ACTION_DISPLAY_SETTINGS)
     val context = LocalContext.current
 
